@@ -1,0 +1,22 @@
+[remap]
+
+importer="texture_atlas"
+type="CompressedTexture2D"
+uid="uid://ciba10dk01phc"
+path="res://.godot/imported/ball.png-dbfca04ee0bd630c71df985dd5b09bcc.ctex"
+metadata={
+"vram_texture": false
+}
+group_file=""
+
+[deps]
+
+source_file="res://sprites/ball.png"
+dest_files=["res://.godot/imported/ball.png-dbfca04ee0bd630c71df985dd5b09bcc.ctex"]
+
+[params]
+
+atlas_file=""
+import_mode=0
+crop_to_region=false
+trim_alpha_border_from_region=true

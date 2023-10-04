@@ -1,0 +1,22 @@
+[remap]
+
+importer="texture_atlas"
+type="CompressedTexture2D"
+uid="uid://bgvk2ydcswl1"
+path="res://.godot/imported/wall2.png-17ff6277eb729615f979247f9341c19b.ctex"
+metadata={
+"vram_texture": false
+}
+group_file=""
+
+[deps]
+
+source_file="res://sprites/wall2.png"
+dest_files=["res://.godot/imported/wall2.png-17ff6277eb729615f979247f9341c19b.ctex"]
+
+[params]
+
+atlas_file=""
+import_mode=0
+crop_to_region=false
+trim_alpha_border_from_region=true

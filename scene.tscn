@@ -1,0 +1,119 @@
+[gd_scene load_steps=11 format=3 uid="uid://b36gc6hhd3nq2"]
+
+[ext_resource type="Texture2D" uid="uid://ciba10dk01phc" path="res://sprites/ball.png" id="1_adhhq"]
+[ext_resource type="Script" path="res://Object.gd" id="1_j0smw"]
+[ext_resource type="Texture2D" uid="uid://013m0cpup6wc" path="res://sprites/cat.png" id="2_gtqg4"]
+[ext_resource type="Texture2D" uid="uid://cbxrs31p88a3f" path="res://sprites/mover.png" id="3_db3th"]
+[ext_resource type="Texture2D" uid="uid://cxk64wgql3a8u" path="res://sprites/selector_background.png" id="4_ruul3"]
+[ext_resource type="Texture2D" uid="uid://csqs4j5g25srq" path="res://sprites/side_walker.png" id="5_gv571"]
+[ext_resource type="Texture2D" uid="uid://bgvk2ydcswl1" path="res://sprites/wall2.png" id="6_rw0od"]
+[ext_resource type="Script" path="res://Selector.gd" id="7_km1m8"]
+[ext_resource type="Texture2D" uid="uid://g2s10a28s51l" path="res://sprites/selector.png" id="9_g2xng"]
+[ext_resource type="Script" path="res://Background.gd" id="10_oq3tf"]
+
+[node name="Scene" type="Node2D"]
+
+[node name="Map" type="Node2D" parent="."]
+
+[node name="BallObject" type="Node2D" parent="Map"]
+position = Vector2(300, 400)
+script = ExtResource("1_j0smw")
+type = "Ball"
+
+[node name="Ball" type="Sprite2D" parent="Map/BallObject"]
+position = Vector2(8, 6)
+texture = ExtResource("1_adhhq")
+
+[node name="CatObject" type="Node2D" parent="Map"]
+position = Vector2(500, 100)
+script = ExtResource("1_j0smw")
+type = "Cat"
+
+[node name="Cat" type="Sprite2D" parent="Map/CatObject"]
+texture = ExtResource("2_gtqg4")
+
+[node name="MoverObject" type="Node2D" parent="Map"]
+position = Vector2(400, 300)
+script = ExtResource("1_j0smw")
+type = "Mover"
+
+[node name="Mover" type="Sprite2D" parent="Map/MoverObject"]
+texture = ExtResource("3_db3th")
+
+[node name="MoverObject2" type="Node2D" parent="Map"]
+position = Vector2(200, 300)
+script = ExtResource("1_j0smw")
+type = "Mover"
+
+[node name="Mover" type="Sprite2D" parent="Map/MoverObject2"]
+texture = ExtResource("3_db3th")
+
+[node name="MoverObject3" type="Node2D" parent="Map"]
+position = Vector2(100, 400)
+script = ExtResource("1_j0smw")
+type = "Mover"
+
+[node name="Mover" type="Sprite2D" parent="Map/MoverObject3"]
+texture = ExtResource("3_db3th")
+
+[node name="MoverObject4" type="Node2D" parent="Map"]
+position = Vector2(600, 700)
+script = ExtResource("1_j0smw")
+type = "Mover"
+
+[node name="Mover" type="Sprite2D" parent="Map/MoverObject4"]
+texture = ExtResource("3_db3th")
+
+[node name="MoverObject5" type="Node2D" parent="Map"]
+position = Vector2(400, 700)
+script = ExtResource("1_j0smw")
+type = "Mover"
+
+[node name="Mover" type="Sprite2D" parent="Map/MoverObject5"]
+texture = ExtResource("3_db3th")
+
+[node name="SideWalkerObject" type="Node2D" parent="Map"]
+position = Vector2(600, 200)
+script = ExtResource("1_j0smw")
+type = "SideWalker"
+
+[node name="SideWalker" type="Sprite2D" parent="Map/SideWalkerObject"]
+texture = ExtResource("5_gv571")
+
+[node name="WallObject" type="Node2D" parent="Map"]
+position = Vector2(300, 500)
+script = ExtResource("1_j0smw")
+type = "Wall"
+
+[node name="Wall2" type="Sprite2D" parent="Map/WallObject"]
+texture = ExtResource("6_rw0od")
+
+[node name="Selector" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-200, 400)
+script = ExtResource("7_km1m8")
+
+[node name="Left" type="Sprite2D" parent="Selector"]
+position = Vector2(-100, 0)
+texture = ExtResource("4_ruul3")
+
+[node name="Right" type="Sprite2D" parent="Selector"]
+position = Vector2(100, 0)
+texture = ExtResource("4_ruul3")
+
+[node name="Top" type="Sprite2D" parent="Selector"]
+position = Vector2(0, -100)
+texture = ExtResource("4_ruul3")
+
+[node name="Bottom" type="Sprite2D" parent="Selector"]
+position = Vector2(0, 100)
+texture = ExtResource("4_ruul3")
+
+[node name="Selector" type="Sprite2D" parent="Selector"]
+texture = ExtResource("9_g2xng")
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -2
+script = ExtResource("10_oq3tf")
+color1 = Color(0.219608, 0.219608, 0.219608, 1)
+color2 = Color(0.117647, 0.117647, 0.117647, 1)

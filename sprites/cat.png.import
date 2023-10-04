@@ -1,0 +1,22 @@
+[remap]
+
+importer="texture_atlas"
+type="CompressedTexture2D"
+uid="uid://013m0cpup6wc"
+path="res://.godot/imported/cat.png-ac9bdd638588658e9e4d5483e87ac256.ctex"
+metadata={
+"vram_texture": false
+}
+group_file=""
+
+[deps]
+
+source_file="res://sprites/cat.png"
+dest_files=["res://.godot/imported/cat.png-ac9bdd638588658e9e4d5483e87ac256.ctex"]
+
+[params]
+
+atlas_file=""
+import_mode=0
+crop_to_region=false
+trim_alpha_border_from_region=true
