@@ -1,7 +1,7 @@
 extends Node
 
 var map = []
-var size = 10
+var size = 12
 var offset = 100
 
 var empty_item = {
@@ -11,16 +11,30 @@ var empty_item = {
 }
 
 var id_i = -1
+var t : float = 0.0
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
+var items = []
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func animate(dt):
+	if t >= 1.0:
+		return
+	
+	t += dt
+	if t > 1.0:
+		t = 1.0
+		
+		for item in items:
+			move_item(item, item.next_i, item.next_j)
+	
+	for item in items:
+		item.position.x = (item.i * (1.0 - t) + item.next_i * t) * 100 + offset
+		item.position.y = (item.j * (1.0 - t) + item.next_j * t) * 100 + offset
+
+
+func trigger_move():
+	t = 0.0
 
 
 func move_item(item, i, j):
@@ -39,6 +53,8 @@ func set_item(i, j, o):
 	o.prev_j = o.j
 	o.i = i;
 	o.j = j;
+	o.next_i = i
+	o.next_j = j
 	map[j * size + i] = o
 
 
@@ -55,6 +71,11 @@ func gather_items(map_node):
 	for child in map_node.get_children():
 		child.id = next_id()
 		set_item(int((child.position.x - offset) / 100), int((child.position.y - offset) / 100), child)
+		child.prev_i = child.i
+		child.prev_j = child.j
+		
+		items.append(child)
+		
 	for j in size:
 		for i in size:
 			if !get_item(i, j):

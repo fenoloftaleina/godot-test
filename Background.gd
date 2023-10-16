@@ -1,6 +1,6 @@
 extends Node2D
 
-var size = 10
+var size = 12
 var offset = 100
 
 @export var color1 : Color

@@ -4,6 +4,8 @@ extends Node2D
 @export var type : String
 var i : int
 var j : int
+var next_i : int
+var next_j : int
 var prev_i : int
 var prev_j : int
 
