@@ -15,7 +15,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	map.animate(delta)
+	ripple.animate(delta)
 	
 	if Input.is_action_just_released("left-click"):
 		var mouse_position = get_viewport().get_mouse_position()
@@ -45,7 +45,6 @@ func _process(delta):
 				selected.next_j = mouse_j
 				select(null)
 				
-				map.trigger_move()
 				ripple.run_from(mouse_i, mouse_j)
 			elif mouse_item.type != "Empty":
 				select(mouse_item)

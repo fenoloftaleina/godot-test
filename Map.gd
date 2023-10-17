@@ -10,31 +10,9 @@ var empty_item = {
 	"type": "Empty"
 }
 
-var id_i = -1
-var t : float = 0.0
-
-
 var items = []
 
-
-func animate(dt):
-	if t >= 1.0:
-		return
-	
-	t += dt
-	if t > 1.0:
-		t = 1.0
-		
-		for item in items:
-			move_item(item, item.next_i, item.next_j)
-	
-	for item in items:
-		item.position.x = (item.i * (1.0 - t) + item.next_i * t) * 100 + offset
-		item.position.y = (item.j * (1.0 - t) + item.next_j * t) * 100 + offset
-
-
-func trigger_move():
-	t = 0.0
+var id_i = -1
 
 
 func move_item(item, i, j):

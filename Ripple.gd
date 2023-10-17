@@ -6,8 +6,6 @@ var ripple_i = 0
 var ripple_plans = []
 var ripple_item_ids = []
 
-var t : float
-
 
 func init(_map):
 	t = 0.0
@@ -31,6 +29,15 @@ func init(_map):
 # klucz do następnego pokoju?
 # przycisk do zrzucania jedzonka dla jakiegoś zwierza?
 # pojedynek w "szachy"?
+#
+#
+#
+#
+# - winda
+# - balon
+# - mysz?
+#
+# Ale to później - na razie wypracować dobrze działanie obecnych typów itemów
 
 
 var reactions = {
@@ -38,55 +45,77 @@ var reactions = {
 		"Ball": func(a, b):
 			return func(): pass,
 		"Mover": func(ball, mover):
+			var mi = ball.i - mover.i
+			var mj = ball.j - mover.j
 			return func():
-				if ball.j == mover.j:
-					ball.next_i = ball.i + ball.i - mover.i
-					return true
-				elif ball.j < mover.j:
-					ball.next_j = ball.j - 1
-					return true,
-		"Cat": func(a, b):
-			return func():
-				if a.j < b.j:
-					a.j += 1,
-		"Wall": func(a, b):
+				print("Moving ball")
+				ball.next_i += mi
+				ball.next_j += mj
+				return true,
+		"Cat": func(ball, cat):
 			return func(): pass,
+		"Wall": func(ball, wall):
+			return func():
+				return,
 		"Empty": func(ball, empty):
 			return func():
 				if ball.j < empty.j:
 					print("ball falling")
 					ball.next_j = ball.j + 1
 					return true,
-		"SideWalker": func(a, b):
-			return func(): pass,
+		"SideWalker": func(ball, side_walker):
+			return func():
+				if ball.j == side_walker.j:
+					print("walker bounce off ball")
+					side_walker.prev_i = ball.i
+					return true,
 	},
 	"Mover": {
 		"Mover": func(mover1, mover2):
-			var mi = mover2.i - mover2.i
-			var mj = mover2.j - mover2.j
 			return func():
-				print("Moving " + str(mover2.i) + " " + str(mover2.j) + " by " + str(mi) + " " + str(mj))
-				mover2.next_i = mover2.i + mi
-				mover2.next_j = mover2.j + mj
-				return true,
+				return,
 		"Wall": func(a, b):
 			return func(): pass,
 		"Empty": func(a, b):
 			return func(): pass,
-		"SideWalker": func(a, b):
-			return func(): pass,
+		"SideWalker": func(mover, side_walker):
+			return func():
+				if mover.j == side_walker.j:
+					print("walker bounce off ball")
+					side_walker.prev_i = mover.i
+					return true,
 	},
 	"Cat": {
-		"Mover": func(a, b):
-			return func(): pass,
-		"Cat": func(a, b):
-			return func(): pass,
+		"Mover": func(cat, mover):
+			var mi = cat.i - mover.i
+			var mj = cat.j - mover.j
+			return func():
+				print("Moving cat")
+				cat.next_i = cat.i + mi
+				cat.next_j = cat.j + mj
+				return true,
+		"Cat": func(cat1, cat2):
+			var mi = cat1.i - cat2.i
+			var mj = cat1.j - cat2.j
+			return func():
+				if mi == 0:
+					cat1.next_i += 1
+					cat2.next_i += 1
+					return true
+				elif mj == 0:
+					cat1.next_j += 1
+					cat2.next_j += 1
+					return true,
 		"Wall": func(a, b):
 			return func(): pass,
 		"Empty": func(a, b):
 			return func(): pass,
-		"SideWalker": func(a, b):
-			return func(): pass,
+		"SideWalker": func(cat, side_walker):
+			var cat_on = cat.j < side_walker.j
+			return func():
+				if cat_on:
+					cat.next_i += side_walker.i - side_walker.prev_i
+					return true,
 	},
 	"Wall": {
 		"Wall": func(a, b):
@@ -95,11 +124,16 @@ var reactions = {
 			return func(): pass,
 	},
 	"SideWalker": {
-		"Wall": func(a, b):
+		"Wall": func(walker, wall):
+			# I should know here if anything is happening, planning before executing, no need for the return bools then...
+			# I kind of want to rewrite this
+			var same_j = walker.j == wall.j
+			# var just_bounced = walker.just_bounced
 			return func():
-				print("walker bounce")
-				a.prev_i = b.i
-				return true,
+				if same_j:
+					print("walker bounce")
+					walker.prev_i = wall.i
+					return false,
 		"Empty": func(walker, empty):
 			return func():
 				print("walker check " + str(walker.prev_i) + " " + str(walker.i))
@@ -139,7 +173,12 @@ func ripple(start_i, start_j):
 			if start_i - i >= 0 && start_j - j >= 0:
 				prepare_ripple_plan(start_i - i, start_j - j)
 	
-	execute_ripple_plans()
+	executed_some_plans = execute_ripple_plans()
+	
+	if executed_some_plans:
+		print("executed some")
+	else:
+		print("NOT executed any")
 
 
 func is_empty_ripple_plan(ni, nj):
@@ -167,8 +206,13 @@ func prepare_ripple_plan(ni, nj):
 # - add more reactions
 # - implement crash checks after movement is finished
 #   - what if crashes are actually mutations - cause combinations of items - WOAH!
+#
+# - vacuum cleaner that pulls towards itself (looking farther than one field away - different design)
+#
+# - what about moves continuing? <--- THIS NOW
+#
+#
 # 
-# - what about moves continuing?
 
 
 var items_ordered = []
@@ -190,9 +234,12 @@ func prepare_ripple_plan_reaction(ai, aj, bi, bj):
 	ripple_plans[aj * map.size + ai].append(reactions[items_ordered[0].type][items_ordered[1].type].call(items_ordered[0], items_ordered[1]))
 
 
+var executed_some_plans = false
+
+
 func execute_ripple_plans():
 	var plan = []
-	var executed_some_plans = false
+	var some_executed = false
 	for j in map.size:
 		for i in map.size:
 			plan = ripple_plans[j * map.size + i]
@@ -200,11 +247,44 @@ func execute_ripple_plans():
 			#	plan[0].call()
 			for p in plan:
 				if p.call():
-					executed_some_plans = true
+					some_executed = true
 				
-	return executed_some_plans
+	trigger_move()
+	
+	return some_executed
 
 
 func empty_ripple_plans():
 	for i in map.size * map.size:
 		ripple_plans[i] = []
+
+
+
+var t : float = 0.0
+
+
+func animate(dt):
+	if t >= 1.0:
+		return
+	
+	t += dt
+	if t > 1.0:
+		t = 1.0
+		
+		for item in map.items:
+			map.move_item(item, item.next_i, item.next_j)
+		
+		if executed_some_plans:
+			run_from(0, 0)
+	
+	print("animating " + str(t))
+	
+	for item in map.items:
+		print("item i j, ni nj: ", str(item.i) + " " + str(item.j) + ", " + str(item.next_i) + " " + str(item.next_j))
+		item.position.x = (item.i * (1.0 - t) + item.next_i * t) * map.offset + map.offset
+		item.position.y = (item.j * (1.0 - t) + item.next_j * t) * map.offset + map.offset
+
+
+func trigger_move():
+	print("trigger_move()")
+	t = 0.0
