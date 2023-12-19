@@ -36,8 +36,16 @@ func init(_map):
 # - winda
 # - balon
 # - mysz?
+# maybe cat is a lizard that holds on to the wall?
+#
+#
+# Moze ruszanie tymi samymi typami obiektow razem? (albo typ-kolor or sth,
+# albo jeden typ obiektu - mrowki, czy cos)
+#
 #
 # Ale to później - na razie wypracować dobrze działanie obecnych typów itemów
+#
+#
 
 
 var reactions = {
@@ -48,7 +56,7 @@ var reactions = {
 			var mi = ball.i - mover.i
 			var mj = ball.j - mover.j
 			return func():
-				print("Moving ball")
+				print("Moving ball " + str(mi) + " " + str(mj) + " by mover " + str(mover.i) + " " + str(mover.j))
 				ball.next_i += mi
 				ball.next_j += mj
 				return true,
@@ -66,7 +74,7 @@ var reactions = {
 		"SideWalker": func(ball, side_walker):
 			return func():
 				if ball.j == side_walker.j:
-					print("walker bounce off ball")
+					# print("walker bounce off ball")
 					side_walker.prev_i = ball.i
 					return true,
 	},
@@ -81,8 +89,11 @@ var reactions = {
 		"SideWalker": func(mover, side_walker):
 			return func():
 				if mover.j == side_walker.j:
-					print("walker bounce off ball")
+					# print("walker bounce off ball")
 					side_walker.prev_i = mover.i
+					return true
+				else:
+					side_walker.next_j = side_walker.j + side_walker.j - mover.j
 					return true,
 	},
 	"Cat": {
@@ -131,19 +142,19 @@ var reactions = {
 			# var just_bounced = walker.just_bounced
 			return func():
 				if same_j:
-					print("walker bounce")
+					# print("walker bounce")
 					walker.prev_i = wall.i
 					return false,
 		"Empty": func(walker, empty):
 			return func():
-				print("walker check " + str(walker.prev_i) + " " + str(walker.i))
+				# print("walker check " + str(walker.prev_i) + " " + str(walker.i))
 				if empty.j != walker.j:
 					return
 				if walker.prev_i <= walker.i && walker.i < empty.i:
-					print("walker plus")
+					# print("walker plus")
 					walker.next_i = walker.i + 1
 				elif walker.prev_i > walker.i && walker.i > empty.i:
-					print("walker minus")
+					# print("walker minus")
 					walker.next_i = walker.i - 1
 					
 				return true,
@@ -162,39 +173,23 @@ func ripple(start_i, start_j):
 	# ripple_item_ids = []
 	empty_ripple_plans()
 	
-	for j in map.size:
-		for i in map.size:
-			if start_i + i < map.size && start_j + j < map.size:
-				prepare_ripple_plan(start_i + i, start_j + j)
-			if start_i + i < map.size && start_j - j >= 0:
-				prepare_ripple_plan(start_i + i, start_j - j)
-			if start_i - i >= 0 && start_j + j < map.size:
-				prepare_ripple_plan(start_i - i, start_j + j)
-			if start_i - i >= 0 && start_j - j >= 0:
-				prepare_ripple_plan(start_i - i, start_j - j)
-	
+	for j in map.size - 1:
+		for i in map.size - 1:
+			prepare_ripple_plan(i, j)
+			
 	executed_some_plans = execute_ripple_plans()
 	
 	if executed_some_plans:
 		print("executed some")
 	else:
 		print("NOT executed any")
+	
+	trigger_move()
 
-
-func is_empty_ripple_plan(ni, nj):
-	# if ni < 0 || ni >= map.size || nj < 0 || nj >= map.size:
-	#  	return false
-	return ripple_plans[nj * map.size + ni].is_empty()
 
 func prepare_ripple_plan(ni, nj):
-	if ni < map.size - 1 && is_empty_ripple_plan(ni + 1, nj):
-		prepare_ripple_plan_reaction(ni, nj, ni + 1, nj)
-	if nj < map.size - 1 && is_empty_ripple_plan(ni, nj + 1):
-		prepare_ripple_plan_reaction(ni, nj, ni, nj + 1)
-	if ni > 0 && is_empty_ripple_plan(ni - 1, nj):
-		prepare_ripple_plan_reaction(ni, nj, ni - 1, nj)
-	if nj > 0 && is_empty_ripple_plan(ni, nj - 1):
-		prepare_ripple_plan_reaction(ni, nj, ni, nj - 1)
+	prepare_ripple_plan_reaction(ni, nj, ni + 1, nj)
+	prepare_ripple_plan_reaction(ni, nj, ni, nj + 1)
 
 
 #
@@ -248,8 +243,6 @@ func execute_ripple_plans():
 			for p in plan:
 				if p.call():
 					some_executed = true
-				
-	trigger_move()
 	
 	return some_executed
 
@@ -277,10 +270,10 @@ func animate(dt):
 		if executed_some_plans:
 			run_from(0, 0)
 	
-	print("animating " + str(t))
+	# print("animating " + str(t))
 	
 	for item in map.items:
-		print("item i j, ni nj: ", str(item.i) + " " + str(item.j) + ", " + str(item.next_i) + " " + str(item.next_j))
+		# print("item i j, ni nj: ", str(item.i) + " " + str(item.j) + ", " + str(item.next_i) + " " + str(item.next_j))
 		item.position.x = (item.i * (1.0 - t) + item.next_i * t) * map.offset + map.offset
 		item.position.y = (item.j * (1.0 - t) + item.next_j * t) * map.offset + map.offset
 

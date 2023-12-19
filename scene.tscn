@@ -16,7 +16,7 @@
 [node name="Map" type="Node2D" parent="."]
 
 [node name="BallObject" type="Node2D" parent="Map"]
-position = Vector2(400, 500)
+position = Vector2(400, 400)
 script = ExtResource("1_j0smw")
 type = "Ball"
 
@@ -89,7 +89,7 @@ type = "Wall"
 texture = ExtResource("6_rw0od")
 
 [node name="WallObject2" type="Node2D" parent="Map"]
-position = Vector2(100, 400)
+position = Vector2(400, 500)
 script = ExtResource("1_j0smw")
 type = "Wall"
 

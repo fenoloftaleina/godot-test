@@ -19,5 +19,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	queue_redraw()
-	# pass
+	# queue_redraw()
+	pass
