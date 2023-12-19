@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://b218dgj2ornpf"]
+
+[ext_resource type="Script" path="res://generate.gd" id="1_evyqc"]
+[ext_resource type="Texture2D" uid="uid://keqlpnwu7fpg" path="res://sprites/0d9e6b830642bb88c37f2decc146bbaf.jpg" id="1_rbnfg"]
+
+[sub_resource type="Gradient" id="Gradient_gejxx"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_preww"]
+seed = 9
+frequency = 0.0667
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x030u"]
+width = 100
+height = 100
+generate_mipmaps = false
+color_ramp = SubResource("Gradient_gejxx")
+noise = SubResource("FastNoiseLite_preww")
+
+[node name="genartscene" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(904, 402)
+scale = Vector2(10, 10)
+texture = ExtResource("1_rbnfg")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(904, 402)
+scale = Vector2(10, 10)
+texture = SubResource("NoiseTexture2D_x030u")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-34, 5)
+scale = Vector2(0.7, 0.7)
+
+[node name="generate" type="Node2D" parent="Node2D"]
+position = Vector2(12, 11)
+script = ExtResource("1_evyqc")
