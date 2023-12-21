@@ -1,7 +1,7 @@
 extends Node2D
 
 
-@export var type : String
+@export var types : Array
 var i : int
 var j : int
 var next_i : int

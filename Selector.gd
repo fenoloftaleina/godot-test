@@ -28,7 +28,7 @@ func _process(delta):
 		if !mouse_item:
 			select(null)
 		elif !selected:
-			if mouse_item.type != "Empty":
+			if mouse_item.types[0] != "Empty":
 				select(mouse_item)
 		else:
 			var potential_moves = [
@@ -39,14 +39,14 @@ func _process(delta):
 			]
 			var mouse_move = [mouse_i, mouse_j]
 			
-			if mouse_item.type == "Empty" && potential_moves.any(func(potential_move): return potential_move == mouse_move):
+			if mouse_item.types[0] == "Empty" && potential_moves.any(func(potential_move): return potential_move == mouse_move):
 				# print(str(selected.i) + "-" + str(selected.j) + " to " + str(mouse_i) + "-" + str(mouse_j) + " " + mouse_item.type)
 				selected.next_i = mouse_i
 				selected.next_j = mouse_j
 				select(null)
 				
-				ripple.run_from(mouse_i, mouse_j)
-			elif mouse_item.type != "Empty":
+				ripple.run()
+			elif mouse_item.types[0] != "Empty":
 				select(mouse_item)
 			else:
 				select(null)

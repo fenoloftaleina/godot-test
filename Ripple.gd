@@ -87,8 +87,9 @@ var reactions = {
 		"Empty": func(a, b):
 			return func(): pass,
 		"SideWalker": func(mover, side_walker):
+			var same_j = mover.j == side_walker.j
 			return func():
-				if mover.j == side_walker.j:
+				if same_j:
 					# print("walker bounce off ball")
 					side_walker.prev_i = mover.i
 					return true
@@ -150,6 +151,8 @@ var reactions = {
 				# print("walker check " + str(walker.prev_i) + " " + str(walker.i))
 				if empty.j != walker.j:
 					return
+					
+				# TODO: prev_i -> v_i
 				if walker.prev_i <= walker.i && walker.i < empty.i:
 					# print("walker plus")
 					walker.next_i = walker.i + 1
@@ -162,14 +165,7 @@ var reactions = {
 }
 
 
-func run_from(start_i, start_j):
-	ripple(start_i, start_j)
-
-
-func ripple(start_i, start_j):
-	print()
-	print("ripple:")
-	
+func run():
 	# ripple_item_ids = []
 	empty_ripple_plans()
 	
@@ -178,11 +174,6 @@ func ripple(start_i, start_j):
 			prepare_ripple_plan(i, j)
 			
 	executed_some_plans = execute_ripple_plans()
-	
-	if executed_some_plans:
-		print("executed some")
-	else:
-		print("NOT executed any")
 	
 	trigger_move()
 
@@ -210,23 +201,27 @@ func prepare_ripple_plan(ni, nj):
 # 
 
 
-var items_ordered = []
-
 func prepare_ripple_plan_reaction(ai, aj, bi, bj):
-	items_ordered = [map.get_item(ai, aj), map.get_item(bi, bj)]
-	# sort by type, "Empty" last
+	var item_a = map.get_item(ai, aj)
+	var item_b = map.get_item(bi, bj)
 	
-	if items_ordered[0].type == "Empty" && items_ordered[1].type == "Empty":
-		return
+	var reaction
 	
-	items_ordered.sort_custom(func(a, b):
-		if a.type == "Empty":
-			return false
-		elif b.type == "Empty":
-			return true
-		else:
-			return a.type < b.type)
-	ripple_plans[aj * map.size + ai].append(reactions[items_ordered[0].type][items_ordered[1].type].call(items_ordered[0], items_ordered[1]))
+	for type_a in item_a.types:
+		for type_b in item_b.types:
+			if type_a == "Empty" && type_b == "Empty":
+				continue
+			
+			if type_a == "Empty":
+				reaction = reactions[type_b][type_a].call(item_b, item_a)
+			elif type_b == "Empty":
+				reaction = reactions[type_a][type_b].call(item_a, item_b)
+			elif type_b > type_a:
+				reaction = reactions[type_a][type_b].call(item_a, item_b)
+			else:
+				reaction = reactions[type_b][type_a].call(item_b, item_a)
+			
+			ripple_plans[aj * map.size + ai].append(reaction)
 
 
 var executed_some_plans = false
@@ -268,7 +263,7 @@ func animate(dt):
 			map.move_item(item, item.next_i, item.next_j)
 		
 		if executed_some_plans:
-			run_from(0, 0)
+			run()
 	
 	# print("animating " + str(t))
 	
@@ -279,5 +274,4 @@ func animate(dt):
 
 
 func trigger_move():
-	print("trigger_move()")
 	t = 0.0

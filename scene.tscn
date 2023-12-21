@@ -18,7 +18,7 @@
 [node name="BallObject" type="Node2D" parent="Map"]
 position = Vector2(400, 400)
 script = ExtResource("1_j0smw")
-type = "Ball"
+types = ["Ball"]
 
 [node name="Ball" type="Sprite2D" parent="Map/BallObject"]
 position = Vector2(8, 6)
@@ -27,7 +27,7 @@ texture = ExtResource("1_adhhq")
 [node name="CatObject" type="Node2D" parent="Map"]
 position = Vector2(600, 200)
 script = ExtResource("1_j0smw")
-type = "Cat"
+types = ["Cat"]
 
 [node name="Cat" type="Sprite2D" parent="Map/CatObject"]
 texture = ExtResource("2_gtqg4")
@@ -35,7 +35,7 @@ texture = ExtResource("2_gtqg4")
 [node name="MoverObject" type="Node2D" parent="Map"]
 position = Vector2(500, 400)
 script = ExtResource("1_j0smw")
-type = "Mover"
+types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject"]
 texture = ExtResource("3_db3th")
@@ -43,7 +43,7 @@ texture = ExtResource("3_db3th")
 [node name="MoverObject2" type="Node2D" parent="Map"]
 position = Vector2(300, 400)
 script = ExtResource("1_j0smw")
-type = "Mover"
+types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject2"]
 texture = ExtResource("3_db3th")
@@ -51,7 +51,7 @@ texture = ExtResource("3_db3th")
 [node name="MoverObject3" type="Node2D" parent="Map"]
 position = Vector2(200, 500)
 script = ExtResource("1_j0smw")
-type = "Mover"
+types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject3"]
 texture = ExtResource("3_db3th")
@@ -59,7 +59,7 @@ texture = ExtResource("3_db3th")
 [node name="MoverObject4" type="Node2D" parent="Map"]
 position = Vector2(700, 800)
 script = ExtResource("1_j0smw")
-type = "Mover"
+types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject4"]
 texture = ExtResource("3_db3th")
@@ -67,7 +67,7 @@ texture = ExtResource("3_db3th")
 [node name="MoverObject5" type="Node2D" parent="Map"]
 position = Vector2(500, 800)
 script = ExtResource("1_j0smw")
-type = "Mover"
+types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject5"]
 texture = ExtResource("3_db3th")
@@ -75,7 +75,7 @@ texture = ExtResource("3_db3th")
 [node name="SideWalkerObject" type="Node2D" parent="Map"]
 position = Vector2(700, 300)
 script = ExtResource("1_j0smw")
-type = "SideWalker"
+types = ["SideWalker"]
 
 [node name="SideWalker" type="Sprite2D" parent="Map/SideWalkerObject"]
 texture = ExtResource("5_gv571")
@@ -83,7 +83,7 @@ texture = ExtResource("5_gv571")
 [node name="WallObject" type="Node2D" parent="Map"]
 position = Vector2(400, 600)
 script = ExtResource("1_j0smw")
-type = "Wall"
+types = ["Wall"]
 
 [node name="Wall2" type="Sprite2D" parent="Map/WallObject"]
 texture = ExtResource("6_rw0od")
@@ -91,7 +91,7 @@ texture = ExtResource("6_rw0od")
 [node name="WallObject2" type="Node2D" parent="Map"]
 position = Vector2(400, 500)
 script = ExtResource("1_j0smw")
-type = "Wall"
+types = ["Wall"]
 
 [node name="Wall2" type="Sprite2D" parent="Map/WallObject2"]
 texture = ExtResource("6_rw0od")
@@ -99,15 +99,15 @@ texture = ExtResource("6_rw0od")
 [node name="WallObject3" type="Node2D" parent="Map"]
 position = Vector2(100, 300)
 script = ExtResource("1_j0smw")
-type = "Wall"
+types = ["Wall"]
 
 [node name="Wall2" type="Sprite2D" parent="Map/WallObject3"]
 texture = ExtResource("6_rw0od")
 
 [node name="WallObject4" type="Node2D" parent="Map"]
-position = Vector2(1200, 300)
+position = Vector2(900, 300)
 script = ExtResource("1_j0smw")
-type = "Wall"
+types = ["Wall"]
 
 [node name="Wall2" type="Sprite2D" parent="Map/WallObject4"]
 texture = ExtResource("6_rw0od")
