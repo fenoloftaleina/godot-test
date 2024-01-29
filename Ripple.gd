@@ -46,6 +46,13 @@ func init(_map):
 # Ale to później - na razie wypracować dobrze działanie obecnych typów itemów
 #
 #
+#
+# Some The Incredible Machine twist/items
+#
+# Set and run, and see what happens?
+#
+# - battery? fire?
+#
 
 
 var reactions = {
@@ -165,6 +172,11 @@ var reactions = {
 }
 
 
+# TODO: rozne rodzaje kolizji/mutacji? (another dictionary)
+# Czasami mutacja, czasami nie? mury nieruszalne?
+# Pilka zabija kota?
+
+
 func run():
 	# ripple_item_ids = []
 	empty_ripple_plans()
@@ -194,8 +206,6 @@ func prepare_ripple_plan(ni, nj):
 #   - what if crashes are actually mutations - cause combinations of items - WOAH!
 #
 # - vacuum cleaner that pulls towards itself (looking farther than one field away - different design)
-#
-# - what about moves continuing? <--- THIS NOW
 #
 #
 # 
@@ -264,8 +274,6 @@ func animate(dt):
 		
 		if executed_some_plans:
 			run()
-	
-	# print("animating " + str(t))
 	
 	for item in map.items:
 		# print("item i j, ni nj: ", str(item.i) + " " + str(item.j) + ", " + str(item.next_i) + " " + str(item.next_j))

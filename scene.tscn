@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://b36gc6hhd3nq2"]
+[gd_scene load_steps=10 format=3 uid="uid://b36gc6hhd3nq2"]
 
 [ext_resource type="Texture2D" uid="uid://ciba10dk01phc" path="res://sprites/ball.png" id="1_adhhq"]
 [ext_resource type="Script" path="res://Object.gd" id="1_j0smw"]
 [ext_resource type="Texture2D" uid="uid://013m0cpup6wc" path="res://sprites/cat.png" id="2_gtqg4"]
-[ext_resource type="Texture2D" uid="uid://cbxrs31p88a3f" path="res://sprites/mover.png" id="3_db3th"]
-[ext_resource type="Texture2D" uid="uid://cxk64wgql3a8u" path="res://sprites/selector_background.png" id="4_ruul3"]
-[ext_resource type="Texture2D" uid="uid://csqs4j5g25srq" path="res://sprites/side_walker.png" id="5_gv571"]
+[ext_resource type="Texture2D" uid="uid://xxive78kmx32" path="res://sprites/mover.png" id="4_m164e"]
+[ext_resource type="Texture2D" uid="uid://df2b8skjm000w" path="res://sprites/side_walker.png" id="5_5ddk2"]
 [ext_resource type="Texture2D" uid="uid://bgvk2ydcswl1" path="res://sprites/wall2.png" id="6_rw0od"]
 [ext_resource type="Script" path="res://Selector.gd" id="7_km1m8"]
 [ext_resource type="Texture2D" uid="uid://g2s10a28s51l" path="res://sprites/selector.png" id="9_g2xng"]
@@ -32,13 +31,21 @@ types = ["Cat"]
 [node name="Cat" type="Sprite2D" parent="Map/CatObject"]
 texture = ExtResource("2_gtqg4")
 
+[node name="CatObject2" type="Node2D" parent="Map"]
+position = Vector2(600, 1000)
+script = ExtResource("1_j0smw")
+types = ["Cat"]
+
+[node name="Cat" type="Sprite2D" parent="Map/CatObject2"]
+texture = ExtResource("2_gtqg4")
+
 [node name="MoverObject" type="Node2D" parent="Map"]
 position = Vector2(500, 400)
 script = ExtResource("1_j0smw")
 types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject"]
-texture = ExtResource("3_db3th")
+texture = ExtResource("4_m164e")
 
 [node name="MoverObject2" type="Node2D" parent="Map"]
 position = Vector2(300, 400)
@@ -46,7 +53,7 @@ script = ExtResource("1_j0smw")
 types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject2"]
-texture = ExtResource("3_db3th")
+texture = ExtResource("4_m164e")
 
 [node name="MoverObject3" type="Node2D" parent="Map"]
 position = Vector2(200, 500)
@@ -54,23 +61,23 @@ script = ExtResource("1_j0smw")
 types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject3"]
-texture = ExtResource("3_db3th")
+texture = ExtResource("4_m164e")
 
 [node name="MoverObject4" type="Node2D" parent="Map"]
-position = Vector2(700, 800)
+position = Vector2(700, 900)
 script = ExtResource("1_j0smw")
 types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject4"]
-texture = ExtResource("3_db3th")
+texture = ExtResource("4_m164e")
 
 [node name="MoverObject5" type="Node2D" parent="Map"]
-position = Vector2(500, 800)
+position = Vector2(700, 600)
 script = ExtResource("1_j0smw")
 types = ["Mover"]
 
 [node name="Mover" type="Sprite2D" parent="Map/MoverObject5"]
-texture = ExtResource("3_db3th")
+texture = ExtResource("4_m164e")
 
 [node name="SideWalkerObject" type="Node2D" parent="Map"]
 position = Vector2(700, 300)
@@ -78,7 +85,15 @@ script = ExtResource("1_j0smw")
 types = ["SideWalker"]
 
 [node name="SideWalker" type="Sprite2D" parent="Map/SideWalkerObject"]
-texture = ExtResource("5_gv571")
+texture = ExtResource("5_5ddk2")
+
+[node name="SideWalkerObject2" type="Node2D" parent="Map"]
+position = Vector2(700, 900)
+script = ExtResource("1_j0smw")
+types = ["SideWalker"]
+
+[node name="SideWalker" type="Sprite2D" parent="Map/SideWalkerObject2"]
+texture = ExtResource("5_5ddk2")
 
 [node name="WallObject" type="Node2D" parent="Map"]
 position = Vector2(400, 600)
@@ -112,26 +127,18 @@ types = ["Wall"]
 [node name="Wall2" type="Sprite2D" parent="Map/WallObject4"]
 texture = ExtResource("6_rw0od")
 
+[node name="WallObject5" type="Node2D" parent="Map"]
+position = Vector2(900, 900)
+script = ExtResource("1_j0smw")
+types = ["Wall"]
+
+[node name="Wall2" type="Sprite2D" parent="Map/WallObject5"]
+texture = ExtResource("6_rw0od")
+
 [node name="Selector" type="Node2D" parent="."]
 z_index = -1
 position = Vector2(-200, 400)
 script = ExtResource("7_km1m8")
-
-[node name="Left" type="Sprite2D" parent="Selector"]
-position = Vector2(-100, 0)
-texture = ExtResource("4_ruul3")
-
-[node name="Right" type="Sprite2D" parent="Selector"]
-position = Vector2(100, 0)
-texture = ExtResource("4_ruul3")
-
-[node name="Top" type="Sprite2D" parent="Selector"]
-position = Vector2(0, -100)
-texture = ExtResource("4_ruul3")
-
-[node name="Bottom" type="Sprite2D" parent="Selector"]
-position = Vector2(0, 100)
-texture = ExtResource("4_ruul3")
 
 [node name="Selector" type="Sprite2D" parent="Selector"]
 texture = ExtResource("9_g2xng")
@@ -139,5 +146,5 @@ texture = ExtResource("9_g2xng")
 [node name="Background" type="Node2D" parent="."]
 z_index = -2
 script = ExtResource("10_oq3tf")
-color1 = Color(0.219608, 0.219608, 0.219608, 1)
-color2 = Color(0.117647, 0.117647, 0.117647, 1)
+color1 = Color(0.984314, 0.941176, 0.901961, 1)
+color2 = Color(0.878431, 0.819608, 0.752941, 1)
